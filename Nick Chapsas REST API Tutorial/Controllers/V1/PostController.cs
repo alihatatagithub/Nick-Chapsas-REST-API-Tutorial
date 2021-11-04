@@ -1,0 +1,32 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Nick_Chapsas_REST_API_Tutorial.Contracts.V1;
+using Nick_Chapsas_REST_API_Tutorial.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Nick_Chapsas_REST_API_Tutorial.Controllers.V1
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PostController : ControllerBase
+    {
+        List<Post> _posts;
+        public PostController()
+        {
+            _posts = new List<Post>();
+            for (int i = 0; i < 5; i++)
+            {
+                _posts.Add(new Post() { Id = Guid.NewGuid().ToString() });
+            }
+        }
+
+        [HttpGet(ApiRoutes.Posts.GetAll)]
+        public IActionResult GetAll()
+        {
+            return Ok(_posts);
+        }
+    }
+}
