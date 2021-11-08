@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Nick_Chapsas_REST_API_Tutorial.Installers;
 using Nick_Chapsas_REST_API_Tutorial.Options;
 using System;
@@ -37,7 +38,37 @@ namespace Nick_Chapsas_REST_API_Tutorial
 
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Tweet Book API", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Tweet Book API", Version = "v1" });
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer",new string[0] }
+                };
+                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authoriaztion Header using bearer scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+
+                });
+                x.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                }); 
             });
 
         }

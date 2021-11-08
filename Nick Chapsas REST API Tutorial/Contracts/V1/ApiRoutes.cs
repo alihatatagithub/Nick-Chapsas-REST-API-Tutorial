@@ -14,7 +14,21 @@ namespace Nick_Chapsas_REST_API_Tutorial.Contracts.V1
         
         public static class Posts
         {
-            public const  string GetAll = Base + "/" + "post";
+            public const string GetAll = Base + "/" + "post";
+            public const  string Update = Base + "/post/{postId}";  //Last Modify
+            public const  string Delete = Base + "/post/{postId}";
+            public const  string Get = Base + "/post/{postId}";
+            public const  string Create = Base + "/post";
+
         }
+
+        public static class Identity
+        {
+            public const string Login = Base + "/Identity/Login";
+            public const string Register = Base + "/Identity/Register";
+
+        }
+
+
     }
 }
